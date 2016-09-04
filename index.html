@@ -279,142 +279,16 @@
       
         
           
-            <p><a href="http://baike.baidu.com/view/490578.htm" target="_blank" rel="external"><strong>MRTG</strong></a> (Multi Router Traffic Grapher)—是一个监控网络链路流量负载的工具软件，通过snmp协议得到设备的流量信息，并将流量负载以包含PNG格式的图形的HTML 文档方式显示给用户，以非常直观的形式显示流量负载。</p>
-<p>安装平台：windows</p>
-<p>工具原料：Windwons server 2003、VMware、ActivePerl、Mrtg、instsrv.exe、srvany.exe    <a href="www.baidu.com">download</a></p>
-<p>安装步骤：</p>
-<ul>
-<li><p>安装VMware虚拟机软件</p>
-</li>
-<li><p>安装windows server 2003</p>
-<p>1、添加IIS、ASP、SNMP组件</p>
-<p>2、确认 SNMP SERVICE 服务开启，添加：只读、public</p>
-<p>3、IIS更改默认站点文件夹 C:\WWW\MRTG</p>
-</li>
-<li><p>安装ActivePerl</p>
-</li>
-</ul>
-<ul>
-<li>配置被监控端主机开启SNMP</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Switch(config)#snmp-server community public ro  #设置只读字符串,public为团体名称,ro为只读</div><div class="line">Switch(config)#snmp-server enable traps  #启用snmp陷井,允许路由器将所有类型SNMP Trap发送出去</div><div class="line">Switch(config)#snmp-server enable traps snmp authentication  #snmp trap 验证</div><div class="line">Switch(config)#snmp-server host 192.168.240.128 traps version 2c public  # 指定snmp trap的接收者为192.168.240.128(监控主机)，发送trap时采用public作为团体名称</div><div class="line">Switch(config)#snmp-server trap-source vlan 11 #设置vlan11虚接口IP地址做为snmp trap信息的发布地址</div><div class="line">Switch(config)#end</div><div class="line">Switch(config)#do wr</div></pre></td></tr></table></figure>
-<ul>
-<li>安装MRTG到C:\MRTG</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cd c:\mrtg\bin</div><div class="line">c:\mrtg\bin&gt;perl cfgmaker public@192.168.26.4 --global &quot;WorkDir: C:\www\mrtg&quot; --output sw264.cfg</div><div class="line">copy sw264.cfg c:\www\mrtg</div><div class="line">Echo RunAsDaemon:yes&gt;&gt;sw264.cfg</div><div class="line">Echo Interval:5&gt;&gt;sw264.cfg  </div><div class="line">Echo Language:gb2312&gt;&gt;sw264.cfg</div><div class="line">perl indexmaker sw264.cfg &gt;c:\www\mrtg\index.htm</div><div class="line">perl mrtg -logging=sw264.log sw264.cfg</div><div class="line">如果成功就会看到提示的信息：Daemonizing MRTG ⋯ Do Not close this windows . Or MRTG will die</div></pre></td></tr></table></figure>
-<ul>
-<li><p>添加MRTG到系统服务</p>
-<p>1、把Srvany.exe 和instsry.exe放到c:\mrtg\bin目录里面，在cmd下运行命令</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c:\mrtg\bin&gt;instsrv mrtg &quot;c:\mrtg\bin\srvany.exe&quot;</div></pre></td></tr></table></figure>
-<p>​       2、导入注册表文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Windows Registry Editor Version 5.00</div><div class="line">[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MRTG\Parameters]  </div><div class="line">&quot;Application&quot;=&quot;c:\\perl64\\bin\\wperl.exe&quot;</div><div class="line">&quot;AppParameters&quot;=&quot;c:\\mrtg\\bin\\mrtg --logging=sw264.log c:\\mrtg\\bin\\sw264.cfg&quot;</div><div class="line">&quot;AppDirectory&quot;=&quot;c:\\mrtg\\bin\\&quot;</div></pre></td></tr></table></figure>
-<p>启动MRTG服务</p>
+          MRTG (Multi Router Traffic Grapher)—是一个监控网络链路流量负载的工具软件，通过snmp协议得到设备的流量信息，并将流量负载以包含PNG格式的图形的HTML 文档方式显示给用户，以非常直观的形式显示流量负载。
+安装平台：windows
+工具原料：Windwons s
+          ...
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/04/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-04T10:53:37+08:00" content="2016-09-04">
-              2016-09-04
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/04/MRTG流量监控安装/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -482,7 +356,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
